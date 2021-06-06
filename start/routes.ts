@@ -19,7 +19,9 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route';
+// import { Route as AuthRoute } from '@ioc:Adonis/Core/Auth';
 
+// AuthRoute.post('/auth/login', 'AuthController.login');
 Route.get('/users', 'UsersController.index');
 Route.get('/users/:id', 'UsersController.show');
 Route.post('/users', 'UsersController.store');

@@ -3,7 +3,7 @@ import 'mocha';
 import HttpClient from './HttpClient';
 import { StatusCodes } from 'http-status-codes';
 import User from 'App/Models/User';
-import { UserFactory } from 'Database/factories';
+import { UserFactory } from '../../database/factories';
 import Utils from 'App/Utils/Utils';
 import chaiSubset from 'chai-subset';
 import { expect } from 'chai';
