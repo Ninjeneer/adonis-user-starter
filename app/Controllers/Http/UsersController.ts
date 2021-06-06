@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import Logger from '@ioc:Adonis/Core/Logger'
 import User from 'App/Models/User';
 import UserCreateValidator from 'App/Validators/UserCreateValidator';
 import UserUpdateValidator from 'App/Validators/UserUpdateValidator';
@@ -17,6 +18,7 @@ export default class UsersController {
       user.username = payload.username;
       user.password = payload.password;
       user = await user.save();
+      Logger.info(`User [${user.id} - ${user.username}] created`);
       response.created(user);
     } catch (e) {
       response.badRequest();
@@ -40,6 +42,7 @@ export default class UsersController {
         const payload = await request.validate(UserUpdateValidator);
         user.username = payload.username;
         user.password = payload.password;
+        Logger.info(`User [${user.id} - ${user.username}] updated`);
         response.ok(user);
       } catch (e) {
         response.badRequest();
@@ -53,6 +56,7 @@ export default class UsersController {
     const user = await User.findBy('id', request.param('id'));
     if (user) {
       await user.delete();
+      Logger.info(`User [${user.id} - ${user.username}] deleted`);
       response.ok(user);
     } else {
       response.notFound();
