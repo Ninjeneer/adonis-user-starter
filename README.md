@@ -34,8 +34,7 @@ Run migrations to build the database structure
 ```shell
 node ace make:migration run
 ```
-
-## Update your repo origin ref
+## Update your repository origin ref
 ```shell
 chmod +x remote.sh
 ./remote.sh your_new_origin_URI
