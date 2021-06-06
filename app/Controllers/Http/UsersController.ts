@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import Logger from '@ioc:Adonis/Core/Logger'
+import Logger from '@ioc:Adonis/Core/Logger';
 import User from 'App/Models/User';
 import UserCreateValidator from 'App/Validators/UserCreateValidator';
 import UserUpdateValidator from 'App/Validators/UserUpdateValidator';
@@ -8,8 +8,6 @@ export default class UsersController {
   public async index({}: HttpContextContract) {
     return User.all();
   }
-
-  public async create({}: HttpContextContract) {}
 
   public async store({ request, response }: HttpContextContract) {
     try {
@@ -32,8 +30,6 @@ export default class UsersController {
     }
     return await User.findBy('id', id);
   }
-
-  public async edit({}: HttpContextContract) {}
 
   public async update({ request, response }: HttpContextContract) {
     const user = await User.findBy('id', request.param('id'));
