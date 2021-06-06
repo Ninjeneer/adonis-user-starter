@@ -30,6 +30,11 @@ PG_PASSWORD=your_password
 PG_DB_NAME=your_db_name
 ```
 
+Run migrations to build the database structure
+```shell
+node ace make:migration run
+```
+
 ## Update your repo origin ref
 ```shell
 chmod +x remote.sh
