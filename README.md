@@ -30,7 +30,7 @@ PG_PASSWORD=your_password
 PG_DB_NAME=your_db_name
 ```
 
-## Update your repo origin ref
+## Update your repository origin ref
 ```shell
 chmod +x remote.sh
 ./remote.sh your_new_origin_URI
