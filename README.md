@@ -7,18 +7,18 @@ Pull Requests are **accepted**, feel free to contribute
 ## Installation
 
 Clone this repository
-```
+```shell
 git clone git@github.com:Ninjeneer/adonis-user-starter
 ```
 
 Install node modules
-```
+```shell
 npm install
 ```
 By default, AdonisUserStarter include a Postgresql driver. Feel free to select your own database driver.
 
 Update databases env values
-```
+```shell
 cp .env.example .env
 ```
 ```
@@ -30,14 +30,20 @@ PG_PASSWORD=your_password
 PG_DB_NAME=your_db_name
 ```
 
+## Update your repo origin ref
+```shell
+chmod +x remote.sh
+./remote.sh your_new_origin_URI
+```
+
 ## Make sure everything works
 Start the server
-```
+```shell
 npm run dev
 ```
 
 Run the tests
-```
+```shell
 npm run tests
 ```
 
