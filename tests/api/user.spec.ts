@@ -1,9 +1,11 @@
 import Utils from 'App/Utils/Utils';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import test from 'japa';
 import supertest from 'supertest';
 import { StatusCodes } from 'http-status-codes';
 import { UserFactory } from 'Database/factories';
+import chaiSubset from 'chai-subset';
+chai.use(chaiSubset);
 
 
 const BASE_URL = Utils.buildServerUrl();
@@ -15,8 +17,9 @@ test.group('User CRUD', () => {
   });
 
   test('should create a user', async () => {
-    const user = UserFactory.create();
-    const response = await supertest(BASE_URL).post('/users').send(user);
+    const user = await UserFactory.make();
+    const response = await supertest(BASE_URL).post('/users').send({ username: user.username, password: user.password });
     expect(response.status).to.be.eq(StatusCodes.CREATED);
+    expect(response.body).to.containSubset({ username: user.username, password: user.password });
   });
 })

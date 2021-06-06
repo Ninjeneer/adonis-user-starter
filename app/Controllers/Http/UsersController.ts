@@ -17,7 +17,7 @@ export default class UsersController {
       user.password = payload.password;
       user = await user.save();
       Logger.info(`User [${user.id} - ${user.username}] created`);
-      response.created(user);
+      response.created(user.toJSON());
     } catch (e) {
       response.badRequest();
     }

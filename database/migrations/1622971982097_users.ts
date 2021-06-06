@@ -1,11 +1,10 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema';
-import v4 from 'uuid';
 export default class Users extends BaseSchema {
   protected tableName = 'users';
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary().defaultTo(v4());
+      table.uuid('id').primary()
       table.string('username');
       table.string('password');
 
