@@ -1,7 +1,7 @@
 {
-  "mochaExplorer.files": "tests/**/*Test.ts",
-  "mochaExplorer.exit": true,
-  "files.associations": {
-    "errno.h": "c"
-  }
+	"mochaExplorer.files": "tests/**/*Test.ts",
+	"mochaExplorer.exit": true,
+	"files.associations": {
+		"errno.h": "c"
+	}
 }
