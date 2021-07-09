@@ -3,24 +3,34 @@ import axios, { Method } from 'axios';
 interface HttpClientResponse<T> {
 	execution: number;
 	status: number;
-	data: T;
+	body: T;
 	headers: any;
 }
 
 export default class HttpClient {
+	private baseUrl: string;
+
+	constructor(baseUrl: string) {
+		this.baseUrl = baseUrl;
+	}
+
+	public setBaseUrl(url: string): void {
+		this.baseUrl = url;
+	}
+
 	private async send<T>(method: Method, url: string, data?: {}): Promise<HttpClientResponse<T>> {
 		const t1 = Date.now();
 		const response = await axios.request({
 			method,
 			data,
 			params: method === 'GET' ? data : null,
-			url,
+			url: this.baseUrl + url,
 		});
 		const t2 = Date.now();
 		return {
 			execution: t2 - t1,
 			status: response.status,
-			data: response.data,
+			body: response.data,
 			headers: response.headers,
 		};
 	}

@@ -4,18 +4,23 @@
 		{
 			"type": "pwa-node",
 			"request": "launch",
-			"name": "Debug Aaapplication",
+			"name": "Debug Adonis Server",
 			"runtimeExecutable": "node",
 			"runtimeArgs": [
-				"ace.js",
+				"ace",
 				"serve",
-				"--watch",
-				"--node-args=\"inspect-brk\""
+				"--watch"
 			],
-			"sourceMaps": true,
-			"resolveSourceMapLocations": [
-				"${workspaceFolder}/**",
-				"!**/node_modules/**"
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "Debug Tests",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": [
+				"run",
+				"test"
 			],
 			"internalConsoleOptions": "openOnSessionStart"
 		}

@@ -17,8 +17,6 @@ export default class UsersController {
 			user.password = payload.password;
 			user = await user.save();
 			Logger.info(`User [${user.id} - ${user.username}] created`);
-			console.log('mdr');
-			console.log(JSON.stringify(user));
 			response.created(user.serialize());
 		} catch (e) {
 			response.badRequest();
@@ -39,7 +37,10 @@ export default class UsersController {
 			try {
 				const payload = await request.validate(UserUpdateValidator);
 				user.username = payload.username;
-				user.password = payload.password;
+				// If the password is updated
+				if (payload.password) {
+					user.password = payload.password;
+				}
 				Logger.info(`User [${user.id} - ${user.username}] updated`);
 				response.ok(user);
 			} catch (e) {
