@@ -5,6 +5,9 @@ export default class Users extends BaseSchema {
 	public async up() {
 		this.schema.createTable(this.tableName, (table) => {
 			table.uuid('id').primary();
+			table.string('email');
+			table.string('firstname');
+			table.string('lastname');
 			table.string('username');
 			table.string('password');
 

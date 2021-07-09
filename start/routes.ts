@@ -21,9 +21,21 @@
 import Route from '@ioc:Adonis/Core/Route';
 // import { Route as AuthRoute } from '@ioc:Adonis/Core/Auth';
 
-// AuthRoute.post('/auth/login', 'AuthController.login');
-Route.get('/users', 'UsersController.index');
-Route.get('/users/:id', 'UsersController.show');
-Route.post('/users', 'UsersController.store');
-Route.put('/users/:id', 'UsersController.update');
-Route.delete('/users/:id', 'UsersController.destroy');
+Route.group(() => {
+	Route.post('/login', 'AuthController.login');
+	Route.post('/register', 'AuthController.register');
+}).prefix('/auth');
+
+
+Route.group(() => {
+	Route.get('/', 'UsersController.index');
+	Route.get('/:id', 'UsersController.show');
+	Route.post('/', 'UsersController.store');
+	Route.put('/:id', 'UsersController.update');
+	Route.delete('/:id', 'UsersController.destroy');
+}).prefix('/users').middleware('auth');
+
+Route.group(() => {
+	Route.get('/', 'TokensController.index')
+}).prefix('/tokens').middleware('auth');
+

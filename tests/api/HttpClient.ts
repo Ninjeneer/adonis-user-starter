@@ -9,13 +9,28 @@ interface HttpClientResponse<T> {
 
 export default class HttpClient {
 	private baseUrl: string;
+	private token: string;
 
 	constructor(baseUrl: string) {
 		this.baseUrl = baseUrl;
 	}
 
+	private buildHeaders() {
+		return {
+			"Authorization": this.token ? "Bearer " + this.token : ""
+		}
+	}
+
 	public setBaseUrl(url: string): void {
 		this.baseUrl = url;
+	}
+
+	public setToken(token: string): void {
+		this.token = token;
+	}
+
+	public withoutToken(): HttpClient {
+		return new HttpClient(this.baseUrl);
 	}
 
 	private async send<T>(method: Method, url: string, data?: {}): Promise<HttpClientResponse<T>> {
@@ -26,6 +41,7 @@ export default class HttpClient {
 				data,
 				params: method === 'GET' ? data : null,
 				url: this.baseUrl + url,
+				headers: this.buildHeaders()
 			});
 			const t2 = Date.now();
 			return {
