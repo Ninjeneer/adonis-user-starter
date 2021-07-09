@@ -41,6 +41,21 @@ test.group('User CRUD', () => {
 		const response = await testData.httpClient.put<User>(`/users/${testData.createdUsers[0].id}`, { username: "Updated username" });
 		expect(response.status).to.be.eq(StatusCodes.OK);
 		expect(response.body.username).to.be.eq("Updated username")
-	})
-	.timeout(0);
+		testData.createdUsers[0] = response.body;
+	}).timeout(0);
+
+	test('should get a user', async () => {
+		const response = await testData.httpClient.get<User>(`/users/${testData.createdUsers[0].id}`);
+		expect(response.status).to.be.eq(StatusCodes.OK);
+		expect(response.body).to.be.deep.eq(testData.createdUsers[0])
+	}).timeout(0);
+
+	test('should delete a user', async () => {
+		let response = await testData.httpClient.delete<User>(`/users/${testData.createdUsers[0].id}`);
+		expect(response.status).to.be.eq(StatusCodes.OK);
+		expect(response.body).to.be.deep.eq(testData.createdUsers[0])
+
+		response = await testData.httpClient.get<User>(`/users/${testData.createdUsers[0].id}`);
+		expect(response.status).to.be.eq(StatusCodes.NOT_FOUND);
+	}).timeout(0);
 })

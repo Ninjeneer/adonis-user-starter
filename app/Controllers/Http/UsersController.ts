@@ -24,11 +24,12 @@ export default class UsersController {
 	}
 
 	public async show({ request, response }: HttpContextContract) {
-		const id = request.param('id');
-		if (!id) {
-			response.badRequest();
+		const user = await User.findBy('id', request.param('id'));
+		if (user) {
+			response.ok(user);
+		} else {
+			response.notFound();
 		}
-		return await User.findBy('id', id);
 	}
 
 	public async update({ request, response }: HttpContextContract) {
@@ -41,6 +42,7 @@ export default class UsersController {
 				if (payload.password) {
 					user.password = payload.password;
 				}
+				user.save();
 				Logger.info(`User [${user.id} - ${user.username}] updated`);
 				response.ok(user);
 			} catch (e) {

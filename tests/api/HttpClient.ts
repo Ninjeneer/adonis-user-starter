@@ -20,27 +20,37 @@ export default class HttpClient {
 
 	private async send<T>(method: Method, url: string, data?: {}): Promise<HttpClientResponse<T>> {
 		const t1 = Date.now();
-		const response = await axios.request({
-			method,
-			data,
-			params: method === 'GET' ? data : null,
-			url: this.baseUrl + url,
-		});
-		const t2 = Date.now();
-		return {
-			execution: t2 - t1,
-			status: response.status,
-			body: response.data,
-			headers: response.headers,
-		};
+		try {
+			const response = await axios.request({
+				method,
+				data,
+				params: method === 'GET' ? data : null,
+				url: this.baseUrl + url,
+			});
+			const t2 = Date.now();
+			return {
+				execution: t2 - t1,
+				status: response.status,
+				body: response.data,
+				headers: response.headers,
+			};
+		} catch (e) {
+			const t2 = Date.now();
+			return {
+				execution: t2 - t1,
+				status: e.response.status,
+				body: e.response.data,
+				headers: e.response.headers,
+			};
+		}
 	}
 
 	public async post<T>(url: string, data?: {}): Promise<HttpClientResponse<T>> {
 		return this.send('POST', url, data);
 	}
 
-	public async get<T>(url: string, params?: {}): Promise<HttpClientResponse<T>> {
-		return this.send('GET', url, params);
+	public async get<T>(url: string): Promise<HttpClientResponse<T>> {
+		return this.send('GET', url, {});
 	}
 
 	public async put<T>(url: string, data?: {}): Promise<HttpClientResponse<T>> {
