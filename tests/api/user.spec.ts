@@ -6,6 +6,7 @@ import Utils from 'App/Utils/Utils';
 import chaiSubset from 'chai-subset';
 import supertest from 'supertest';
 import test from 'japa';
+
 chai.use(chaiSubset);
 
 const BASE_URL = Utils.buildServerUrl();
@@ -20,6 +21,9 @@ test.group('User CRUD', () => {
 		const user = await UserFactory.make();
 		const response = await supertest(BASE_URL).post('/users').send({ username: user.username, password: user.password });
 		expect(response.status).to.be.eq(StatusCodes.CREATED);
-		expect(response.body).to.containSubset({ username: user.username, password: user.password });
+		expect(response.body).to.containSubset({ username: user.username });
+		expect(response.body.createdAt).to.exist;
+		expect(response.body.lastLoggedAt).to.exist;
+		expect(response.body.updatedAt).to.exist;
 	});
 });

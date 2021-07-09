@@ -18,8 +18,8 @@ export default class UsersController {
 			user = await user.save();
 			Logger.info(`User [${user.id} - ${user.username}] created`);
 			console.log('mdr');
-			console.log(user);
-			response.created(user.toJSON());
+			console.log(JSON.stringify(user));
+			response.created(user.serialize());
 		} catch (e) {
 			response.badRequest();
 		}
