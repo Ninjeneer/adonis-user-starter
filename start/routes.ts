@@ -35,6 +35,7 @@ Route.group(() => {
 	Route.delete('/:id', 'UsersController.destroy');
 }).prefix('/users').middleware('auth');
 
+
 Route.group(() => {
 	Route.get('/', 'TokensController.index')
 }).prefix('/tokens').middleware('auth');

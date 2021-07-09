@@ -1,13 +1,13 @@
+import AuthLoginValidator from 'App/Validators/Auth/AuthLoginValidator';
+import AuthRegisterValidator from 'App/Validators/Auth/AuthRegisterValidator';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Logger from '@ioc:Adonis/Core/Logger';
 import User from 'App/Models/User';
-import UserLoginValidator from 'App/Validators/User/UserLoginValidator';
-import UserRegisterValidator from 'App/Validators/Auth/UserRegisterValidator';
 
 export default class AuthController {
   public async login({ auth, request, response }: HttpContextContract) {
     try {
-      const payload = await request.validate(UserLoginValidator);
+      const payload = await request.validate(AuthLoginValidator);
       const token = await auth.use('api').attempt(payload.username, payload.password);
 			response.ok({ ...token.user.serialize(), token: { token: token.token } });
     } catch (e) {
@@ -17,7 +17,7 @@ export default class AuthController {
 
 	public async register({ auth, request, response }: HttpContextContract) {
 		try {
-			const payload = await request.validate(UserRegisterValidator);
+			const payload = await request.validate(AuthRegisterValidator);
 			let user = new User();
 			user.username = payload.username;
 			user.password = payload.password;
