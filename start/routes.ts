@@ -18,8 +18,17 @@
 |
 */
 
+import HealthCheck from '@ioc:Adonis/Core/HealthCheck';
 import Route from '@ioc:Adonis/Core/Route';
-// import { Route as AuthRoute } from '@ioc:Adonis/Core/Auth';
+
+Route.get('health', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+
+  return report.healthy
+    ? response.ok(report)
+    : response.badRequest(report)
+})
+
 
 Route.group(() => {
 	Route.post('/login', 'AuthController.login');
