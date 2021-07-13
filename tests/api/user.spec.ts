@@ -7,20 +7,24 @@ import User from 'App/Models/User';
 import { UserFactory } from 'Database/factories';
 import Utils from 'App/Utils/Utils';
 import chaiSubset from 'chai-subset';
+import getPort from 'get-port';
 
 chai.use(chaiSubset);
-
-const BASE_URL = Utils.buildServerUrl();
-
 class TestData {
-	httpClient: HttpClient = new HttpClient(BASE_URL);
+	httpClient: HttpClient;
 	currentUser: User;
 	createdUsers: User[] = [];
+
+	constructor(url: string) {
+		this.httpClient = new HttpClient(url);
+	}
 }
 
-const testData = new TestData();
 
-test.group('User tests', (group) => {
+test.group('User tests', async (group) => {
+
+	const BASE_URL = Utils.buildServerUrl({ port: await getPort() });
+	const testData = new TestData(BASE_URL);
 
 	group.after(async () => {
 		for (const user of testData.createdUsers) {
